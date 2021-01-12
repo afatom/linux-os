@@ -1,0 +1,31 @@
+[Introduction]    
+    The directory includes simple and basic programs for demonstrationg the idea and
+    usage of POSIX semaphores for synchronising processes and and threads in the same 
+    process. 
+    POSIX have 2 types of semaphores, named and unnamed.
+    both of them can sync threads in the same process or threads that doesnot belong
+    to the same process in other words different processes.
+
+[Unnamed semaphores]
+    (1) Synchronising threads
+        Since threads that belongs to the same process, shares evrey thing except stack and cpu registers,
+        synchronising access to shared resource with unnamed semaphore can be done in 2 ways:
+        i.  Declaring the semaphore on the heap
+        ii. Declare the semaphore as global/static (data segment) 
+    
+    [How]
+        In sem_init(sem_t * sem , int pshared , unsigned int value ); we set pshared to zero value
+    
+    (2) Synchronising processes
+        Since processes do not share any thing by default, inorder to access the semaphore, we need to allocate it 
+        in sharable memory (a POSIX shared memory object, a shared mapping created using mmap(), or a
+        System V shared memory segment)
+        Since a child produced via fork() inherits its parent’s memory
+        mappings, process-shared semaphores are inherited by the child of a fork(), and
+        the parent and child can use these semaphores to synchronize their actions.
+
+    [How]
+        In sem_init(sem_t * sem , int pshared , unsigned int value ); we set pshared to nonzero value
+
+
+[named semaphores]
